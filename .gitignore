@@ -1,0 +1,5 @@
+bookenv/
+config/__pycache__/
+/.venv/
+/__pycache__/
+.idea
