@@ -11,6 +11,7 @@ class CustomUser(AbstractUser): # AbstractUser درون خودش --> شامل --
     # nat_id : National ID : کد ملی
     age = models.PositiveIntegerField(null = True , blank = True)
     
-
+    def __str__(self):
+	        return self.username
 
     

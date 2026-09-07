@@ -1,22 +1,32 @@
-# UserCreationForm --> SignUp
+# AdminUserCreationForm --> SignUp
 # UserChangeForm  --> Admin
 
-from django.contrib.auth.forms import UserChangeForm , UserCreationForm
-from .models import CustomUser  # == from accounts.models  import CustomUser
+"""
+با توجه به اینکه Django شما 6.1.1 است، بهتر است برای فرم افزودن کاربر در پنل ادمین از AdminUserCreationForm استفاده کنیم؛ چون فیلد usable_password را پشتیبانی می‌کند.
+
+فرض می‌کنم مدل CustomUser از AbstractUser ارث‌بری کرده و فقط فیلد age به آن اضافه شده است.
+"""
+from django.contrib.auth.forms import (
+    AdminUserCreationForm,
+    UserChangeForm,
+)
+
+from .models import CustomUser
 
 
-class CustomUserCreationForm(UserCreationForm):
-	'''
-	که من ساختم برای یوزرمدلت استفاده کن CustomUser ای فرم جدید لطفا از مدل  '''
-	# class Meta:
-	class Meta(UserCreationForm.Meta): #  در واقع به این شکلست کلاس مت
-		model = CustomUser
-		fields = UserCreationForm.Meta.fields + ('age',)
-		
+class CustomUserCreationForm(AdminUserCreationForm):
+    class Meta(AdminUserCreationForm.Meta):
+        model = CustomUser
+        fields = AdminUserCreationForm.Meta.fields + ("age",)
+
+
 class CustomUserChangeForm(UserChangeForm):
-	# class Meta:
-	class Meta(UserChangeForm.Meta):   # در واقع به این شکلست کلاس مت
-		model = CustomUser
-		# fields = UserChangeForm.Meta.fields  بنابراین در فرم ویرایش دیگر لازم نیست این خط را تکرار کنید
+    class Meta(UserChangeForm.Meta):
+        model = CustomUser
 
+'''
+نکته مهم این قسمت است:
 
+AdminUserCreationForm
+در نسخه‌های جدید Django این فرم مخصوص ساخت کاربر در پنل ادمین است و فیلد usable_password را می‌شناسد.
+'''
