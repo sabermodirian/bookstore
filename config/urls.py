@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include , path
+from django.views.generic.base import TemplateView
 
+# class HomeView(TemplateView):  بجای این از خط 26 استفاده میکنیم :ترفند:
+# 	template_name='home.html'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+	path('home/', TemplateView.as_view(template_name='home.html'), name = 'home'),
 	path('accounts/',include('django.contrib.auth.urls')), # for login , logout
 	path('accounts/',include('accounts.urls')), #for signup
 ]

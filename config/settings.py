@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 
+from django.conf.global_settings import LOGIN_REDIRECT_URL , LOGOUT_REDIRECT_URL
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -133,3 +135,6 @@ MAILERS = {
 """ اینکار باعث میشه که جنگو از مدل یوزر خودش  که همون (auth.modeluser) هست استفاده نکنه و مستقیم بره
 سراغ مدل یوزری که از اپ accounts پروژه که توسط دولوپر ایجاد میشه بهره بگیره"""
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+LOGIN_REDIRECT_URL = 'home' # بعداز لاگین شدن برو به صفحه ی home
+LOGOUT_REDIRECT_URL = 'home' # بعداز لاگ اوت شدن برو به صفحه ی home
