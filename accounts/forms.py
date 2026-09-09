@@ -17,12 +17,14 @@ from .models import CustomUser
 class CustomUserCreationForm(AdminUserCreationForm):
     class Meta(AdminUserCreationForm.Meta):
         model = CustomUser
-        fields = AdminUserCreationForm.Meta.fields + ("age",)
-
+        # fields = AdminUserCreationForm.Meta.fields + ("age",)
+        fields = ('username' ,'last_name' ,'age' , 'email' ,)
+	    
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = CustomUser
+        fields = ('username','last_name', 'age' , 'email' ,)
 
 '''
 نکته مهم این قسمت است:
