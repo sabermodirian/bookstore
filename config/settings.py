@@ -56,7 +56,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [str(BASE_DIR.joinpath('templates'))], # برای پیدا کردن هر تمپلیتی در این آدرس هم بگرد
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
