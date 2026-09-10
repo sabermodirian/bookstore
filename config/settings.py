@@ -33,14 +33,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+# system  Django's created Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+# local my developer's created Apps
     'accounts',
+	'pages',
 ]
 
 MIDDLEWARE = [
