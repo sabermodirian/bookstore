@@ -130,7 +130,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 
 # Email
@@ -150,3 +157,29 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 
 LOGIN_REDIRECT_URL = 'home' # بعداز لاگین شدن برو به صفحه ی home
 LOGOUT_REDIRECT_URL = 'home' # بعداز لاگ اوت شدن برو به صفحه ی home
+
+# ساختار نهایی پوشه‌ها
+# ساختار پروژه باید به این صورت باشد:
+# bookstore/
+# ├── manage.py
+# │
+# ├── static/
+# │   └── images/
+# │       └── password-change-success.png
+# │
+# ├── staticfiles/
+# │
+# ├── templates/
+# │   ├── _base.html
+# │   └── registration/
+# │       ├── login.html
+# │       ├── password_change_form.html
+# │       └── password_change_done.html
+# │
+# ├── pages/
+# │   ├── views.py
+# │   └── urls.py
+# │
+# └── config/
+#     ├── settings.py
+#     └── urls.py
