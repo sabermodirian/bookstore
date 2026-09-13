@@ -7,9 +7,10 @@
 {% block content %}
 	{% for book in books %}
         <div>
-        نام کتاب :  <h3>{{ book.title }}</h3>
-         نویسنده:<h4>{{ book.author }}</h4>
-        قیمت:  <h5>{{ book.price }} $</h5>
+        نام کتاب : <a href="{{ book.get_absolut_url }}"><h3>{{ book.title }}</h3></a>
+                                                        {#<p>{{ book.description }}</p>#}
+                                                        {#نویسنده:<h4>{{ book.author }}</h4>#}
+                                                        {#قیمت:  <h5>{{ book.price }} $</h5>#}
         </div>
         <p>-------------------------------------------------------------------------------</p>
 
