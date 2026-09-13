@@ -8,4 +8,4 @@ class Book(models.Model):
 	price = models.DecimalField(decimal_places = 3 , max_digits = 7 , verbose_name = 'Price')
 	#decimal_places : تعداداعشار , max_digits : تعدادکل ارقام
 	def __str__(self):
-		return f'{self.title} : اثری ماندگار از نویسنده :  {self.author}  '
+		return f'{self.title} : اثری ماندگار از نویسنده :  {self.author} '

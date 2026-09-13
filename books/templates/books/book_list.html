@@ -1,0 +1,18 @@
+
+{% extends '_base.html' %}
+
+{% block page_title %} 
+	لیست کتابها
+{% endblock %}
+{% block content %}
+	{% for book in books %}
+        <div>
+        نام کتاب :  <h3>{{ book.title }}</h3>
+         نویسنده:<h4>{{ book.author }}</h4>
+        قیمت:  <h5>{{ book.price }} $</h5>
+        </div>
+        <p>-------------------------------------------------------------------------------</p>
+
+	{% endfor %}
+
+{% endblock %}

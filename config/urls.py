@@ -24,4 +24,5 @@ urlpatterns = [
 	path('',include('pages.urls')),
 	path('accounts/',include('django.contrib.auth.urls')), # for login , logout
 	path('accounts/',include('accounts.urls')), #for signup
+	path('books/', include('books.urls')) ,
 ]
