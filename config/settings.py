@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 # local my developer's created Apps
     'accounts',
 	'pages',
+	'books',
 ]
 
 # crispy forms settings
