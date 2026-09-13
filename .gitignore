@@ -3,3 +3,33 @@ config/__pycache__/
 /.venv/
 /__pycache__/
 .idea
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+bookenv/
+venv/
+env/
+.venv/
+
+# Django database
+db.sqlite3
+
+# Environment variables
+.env
+
+# Django collected static files
+staticfiles/
+
+# Media files
+media/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
