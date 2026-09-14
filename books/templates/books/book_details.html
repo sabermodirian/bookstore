@@ -1,5 +1,6 @@
 
 {% extends '_base.html' %}
+{% load book_tags %}
 
 {% block page_title %}
 	جزئیات کتاب   {{ book.title }}
@@ -8,7 +9,7 @@
 
         <div>
         نام کتاب :  <h3>{{ book.title | capfirst }}</h3>
-            <p>{{ book.description|linebreaks }}</p>
+            <p>{{ book.description|to_low:"متن انگلیسی"|linebreaks }}</p>
          نویسنده:<h4>{{ book.author }}</h4>
         قیمت:  <h5>{{ book.price }} $</h5>
         </div>
