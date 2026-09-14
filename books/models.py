@@ -12,6 +12,6 @@ class Book(models.Model):
 	def __str__(self):
 		return f'{self.title} : اثری ماندگار از نویسنده :  {self.author} '
 	
-	def get_absolut_url(self):
+	def get_absolute_url(self):
 		"""هر شیئی ازین کلاس book ساخته شد برایش یک url در نظر بگیر"""
-		return reverse('book_details' , args = [self.id])
+		return reverse('books:book_details' , args={self.pk})

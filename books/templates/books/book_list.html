@@ -7,7 +7,7 @@
 {% block content %}
 	{% for book in books %}
         <div>
-        نام کتاب : <a href="{{ book.get_absolut_url }}"><h3>{{ book.title }}</h3></a>
+        نام کتاب : <a href="{{ book.get_absolute_url }}"><h3>{{ book.title }}</h3></a>
                                                         {#<p>{{ book.description }}</p>#}
                                                         {#نویسنده:<h4>{{ book.author }}</h4>#}
                                                         {#قیمت:  <h5>{{ book.price }} $</h5>#}
@@ -15,5 +15,5 @@
         <p>-------------------------------------------------------------------------------</p>
 
 	{% endfor %}
-
+    <a href="{% url 'books:book_create' %}"><h4>اضافه کردن کتاب جدید</h4></a>
 {% endblock %}
