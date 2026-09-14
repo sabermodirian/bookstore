@@ -16,5 +16,9 @@
     <a href="{% url 'books:book_update' book.id %}">
     <button class="btn btn-info" type="button"> ویرایش</button>
     </a>
+     <a href="{% url 'books:book_delete' book.id %}">
+    <button class="btn btn-danger" type="button"> حذف </button>
+    </a>
+    <br>
     <p><a href="{% url 'books:book_list' %}"> <h4>بازگشت به لیست کتابها</h4> </a></p>
 {% endblock %}
