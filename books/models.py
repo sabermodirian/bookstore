@@ -14,4 +14,4 @@ class Book(models.Model):
 	
 	def get_absolute_url(self):
 		"""هر شیئی ازین کلاس book ساخته شد برایش یک url در نظر بگیر"""
-		return reverse('books:book_details' , args={self.pk})
+		return reverse('books:book_details' , kwargs={'pk': self.pk})

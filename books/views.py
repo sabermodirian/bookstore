@@ -21,9 +21,12 @@ class BookCreateView(generic.CreateView):
 	model = Book
 	fields = ['title' , 'author' , 'description' , 'price']
 	template_name =  'books/book_create.html'
-	success_url = reverse_lazy('books:book_list')
-	#
-	# def get_success_url():
-	# 	return reverse_lazy('books:book_list')
+	success_url = reverse_lazy('books:book_details', kwargs={'pk': self.object.pk} )
+	# #
+	def get_success_url(self) :
+	 	return reverse_lazy('books:book_details' , kwargs = {'pk' : self.object.pk})
+	
+
+
 	
 
