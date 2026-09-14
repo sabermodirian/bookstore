@@ -7,8 +7,8 @@
 {% block content %}
 
         <div>
-        نام کتاب :  <h3>{{ book.title }}</h3>
-            <p>{{ book.description }}</p>
+        نام کتاب :  <h3>{{ book.title | capfirst }}</h3>
+            <p>{{ book.description|linebreaks }}</p>
          نویسنده:<h4>{{ book.author }}</h4>
         قیمت:  <h5>{{ book.price }} $</h5>
         </div>
