@@ -13,5 +13,8 @@
         قیمت:  <h5>{{ book.price }} $</h5>
         </div>
     <br>
-    <div><a href="{% url 'books:book_list' %}"> <h4>بازگشت به لیست کتابها</h4> </a></div>
+    <a href="{% url 'books:book_update' book.id %}">
+    <button class="btn btn-info" type="button"> ویرایش</button>
+    </a>
+    <p><a href="{% url 'books:book_list' %}"> <h4>بازگشت به لیست کتابها</h4> </a></p>
 {% endblock %}
