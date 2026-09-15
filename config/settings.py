@@ -131,10 +131,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "/static/" # موجود در هر اپ که خود جنگو میگرده پیداشون میکنه static files فایلهای
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
+STATICFILES_DIRS = [   # TODO  STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
+    BASE_DIR / "static",  # به جنگو میگیم علاوه بر static files های درون هر اپ بیا درون تمپلیت اصلی پروژه هم دنبال استاتیک فایلها بگرد
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
