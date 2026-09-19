@@ -19,7 +19,7 @@ class BookDetailsView(generic.DetailView):
 	
 class BookCreateView(generic.CreateView):
 	model = Book
-	fields = ['title' , 'author' , 'description' , 'price']
+	fields = ['title' , 'author' , 'description' , 'price', 'bk_cover']
 	template_name =  'books/book_create.html' #'books/book_create_and_update.html'
 	# success_url = reverse_lazy('books:book_details', kwargs={'pk': self.object.pk} )
 	# #
