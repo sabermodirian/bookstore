@@ -9,6 +9,10 @@ class Book(models.Model):
 	description = models.TextField(verbose_name = 'Description')
 	price = models.DecimalField(decimal_places = 3 , max_digits = 7 , verbose_name = 'Price')
 	#decimal_places : تعداداعشار , max_digits : تعدادکل ارقام
+	
+	bk_cover = models.ImageField(upload_to = 'covers/', blank = True) #تصاویر جلد کتابها را در این مسیر ذخیره کن
+	
+	
 	def __str__(self):
 		return f'{self.title} : اثری ماندگار از نویسنده :  {self.author} '
 	

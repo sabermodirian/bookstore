@@ -139,6 +139,10 @@ STATICFILES_DIRS = [   # TODO  STATICFILES_DIRS = [str(BASE_DIR.joinpath('static
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# media files:
+MEDIA_URL = '/media/'
+MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
+
 
 
 # Email
