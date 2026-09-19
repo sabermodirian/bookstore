@@ -10,7 +10,7 @@ class Book(models.Model):
 	price = models.DecimalField(decimal_places = 3 , max_digits = 7 , verbose_name = 'Price')
 	#decimal_places : تعداداعشار , max_digits : تعدادکل ارقام
 	
-	bk_cover = models.ImageField(upload_to = 'covers/', blank = True) #تصاویر جلد کتابها را در این مسیر ذخیره کن
+	bk_cover = models.ImageField(upload_to = 'covers/', blank = True , verbose_name = 'Book Cover') #تصاویر جلد کتابها را در این مسیر ذخیره کن
 	
 	
 	def __str__(self):
