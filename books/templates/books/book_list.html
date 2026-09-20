@@ -38,9 +38,50 @@
 
             {% endfor %}
 
-
         </div>
     </div>
+
+    <nav aria-label="Page navigation" class="my-4">
+    <ul class="pagination justify-content-center">
+
+        {# دکمه صفحه قبلی #}
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    « قبلی
+                </a>
+            </li>
+            {# شماره صفحه قبلی #}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                    {{ page_obj.previous_page_number }}
+                </a>
+            </li>
+        {% endif %}
+
+        {# صفحه جاری (Active و بدون لینک) #}
+        <li class="page-item active" aria-current="page">
+            <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+
+        {# دکمه و شماره صفحه بعدی #}
+        {% if page_obj.has_next %}
+            {# شماره صفحه بعدی #}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                    {{ page_obj.next_page_number }}
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    بعدی »
+                </a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
+
 
     <footer class="bg-light text-center text-lg-start mt-5">
         <div class="text-center bg-grey">
