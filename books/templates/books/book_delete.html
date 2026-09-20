@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block content %}
+    <br>
+    <br>
+    <form action="" method="post">
 
-    <form action="" method="post" >
-            {% csrf_token %}
+        {% csrf_token %}
 
-        <h1 class="btn btn-info" type="button"> حذف </h1>
-        <h3>"{{ book.title }}" </h3>
+        <h1 class="btn btn-outline-warning" type="button">" آماده ی حذف نمودن کتاب  {{ book.title }}" </h1>
+
 
         </a>
         <h4>آیا از حذف نمودن کتاب "{{ book.title }}"مطمئن هستید؟</h4>
