@@ -13,9 +13,9 @@
                         <div class="col-xs-12 col-md-3 d-flex justify-content-center">
                             <div>
                                 {% if book.bk_cover %}
-                            <img src="{{ book.bk_cover.url }}"
-                                 class="img-fluid rounded-start" class="shadow"  alt="...">
-                            {% endif %}
+                                    <img src="{{ book.bk_cover.url }}"
+                                         class="img-fluid rounded-start" class="shadow" alt="...">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
@@ -34,9 +34,13 @@
 
                 <div class="d-flex justify-content-center">
                     <div class="my-3 p-5 w-sm-75 w-100">
-                       {{ book.description|linebreaks }}
+                        {{ book.description|linebreaks }}
                     </div>
                 </div>
+                <button type="button" class="btn btn-primary"
+                        onclick="window.location.href='{% url 'books:book_update' pk=book.pk %}'">
+                    ویرایش
+                </button>
 
                 <div class="d-flex justify-content-center">
                     <div class="card shadow my-3 p-5 w-sm-75 w-100">
