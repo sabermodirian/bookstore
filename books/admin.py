@@ -5,8 +5,9 @@ from .models import Book , Comment
 class BookAdmin(admin.ModelAdmin):
 	model = Book
 	
-@@admin.register(Comment)
+@admin.register(Comment)
 class ModelNameAdmin(admin.ModelAdmin):
 	model = Comment
+	list_display = ('user' , 'book','text','created_at',)
  
 	
