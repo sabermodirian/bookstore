@@ -1,7 +1,9 @@
-from django.shortcuts import render
+
+from django.shortcuts import render , get_object_or_404
 from django.urls import reverse_lazy
 from django.views import  generic # CBV :Class Base View
 
+#import yor models
 from books.models import Book
 
 
@@ -13,10 +15,22 @@ class BooklistView(generic.ListView):
 	template_name = 'books/book_list.html'
 	context_object_name = 'books'
 	
+#
+# class BookDetailsView(generic.DetailView):
+# 	model = Book
+# 	template_name = 'books/book_details.html'
 
-class BookDetailsView(generic.DetailView):
-	model = Book
-	template_name = 'books/book_details.html'
+def book_details_view(request, pk):
+    book = get_object_or_404(Book, pk=pk) # get book object
+    
+    book_comments= book.cmnts_rel.all() # get book's comments برای گرفتن کامنتهای هر کتاب با استفاده از related_name
+    return render(request,
+                  'books/book_details.html',
+                  {'book': book,
+                   'comments' : book_comments ,
+                   })
+
+	
 	
 class BookCreateView(generic.CreateView):
 	model = Book
