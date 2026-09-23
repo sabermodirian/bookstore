@@ -1,48 +1,65 @@
 
-from django.shortcuts import render , get_object_or_404
+from django.shortcuts import render , get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import  generic # CBV :Class Base View
-
 #import yor models
 from books.models import Book
 from books.forms import CommentForm
 
-
 # Create your views here.
-
 class BooklistView(generic.ListView):
 	model = Book
 	paginate_by = 5
 	template_name = 'books/book_list.html'
 	context_object_name = 'books'
-	
 #
 # class BookDetailsView(generic.DetailView):
 # 	model = Book
 # 	template_name = 'books/book_details.html'
+'''
+الگوی PRG یا (Post/Redirect/Get) چیه و چرا گفتم ریدایرکت کنی؟ 🚀
+فرض کن کاربر یه کامنت گذاشت: “کتاب خیلی قشنگی بود!” و دکمه «ارسال» رو زد.
 
+❌ سناریوی بدون Redirect (کد فعلی تو):
+اگر کاربر بعد از فرستادن کامنت، صفحه‌ی مرورگرش رو رفرش کنه (F5 بزنه)، مرورگر یه پیغام ترسناک بهش میده:
+
+“The page that you’re looking for used information that you entered… Confirm form resubmission?”
+
+کاربر هم بدون اینکه بخونه میزنه Continue؛ و بوم! 💥 کامنتش دوبار توی دیتابیس ثبت میشه! (یا اگه درگاه پرداخت بود، دو بار پول کم می‌شد! 😱).
+
+✅ سناریوی استاندارد با Redirect (الگوی PRG):
+جنگوکارای با تجربه میان بعد از اینکه فرم با موفقیت ذخیره شد (save)، کاربر رو ریدایرکت می‌کنن به همون صفحه. اینجوری مرورگر از حالت POST به حالت امنِ GET سوییچ می‌کنه و کاربر ۱۰۰ بارم F5 بزنه، کامنت تکراری ثبت نمیشه!
+
+کد استاندارد و خوشگلش این شکلی میشه:
+'''
 def book_details_view(request, pk):
     book = get_object_or_404(Book, pk=pk) # get book object
     
-    book_comments= book.cmnts_rel.all() # get book's comments برای گرفتن کامنتهای هر کتاب با استفاده از related_name
-    if request.method != 'POST' :
+    book_comments = (book.cmnts_rel
+                     .select_related('user')  # برای جلوگیری از کوئری اضافه (N+1) 👌
+                     .order_by('-created_at'))
+    # get book's comments برای گرفتن کامنتهای هر کتاب با استفاده از related_name
+    if request.method == 'POST' :
 	    comment_form = CommentForm(request.POST)
-	    if comment_form.is_valid():
+	    if comment_form.is_valid() :
 		    new_cmnt = comment_form.save(commit = False)
 		    new_cmnt.book = book
 		    new_cmnt.user = request.user
 		    new_cmnt.save()
-		    comment_form = comment_form()
-	# else:
-	# 	comment_form = comment_form()
-	
+		    # 🎯 اینجا کاربر رو ریدایرکت می‌کنیم به همین صفحه کتاب:
+		    return redirect('books:book_details' , pk = book.pk)  # یا new_cmnt.book.get_absolute_url()
+    else :
+	    # وقتی درخواست GET هست (کاربر تازه اومده تو صفحه)، یه فرم خالی بهش نشون بده:
+	    comment_form = CommentForm()
     
-    return render(request,
-                  'books/book_details.html',
-                  {'book': book,
-                   'comments' : book_comments ,
-                   'comment_form' : comment_form,
-                   })
+    return render(request ,
+                    'books/book_details.html' ,
+		                    {
+								    'book' : book ,
+								    'comment_form' : comment_form ,
+	                                'comments' : book_comments ,
+		                            }
+                  )
 
 	
 	

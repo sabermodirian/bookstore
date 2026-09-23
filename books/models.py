@@ -24,7 +24,7 @@ class Book(models.Model):
 class Comment(models.Model):
 	user = models.ForeignKey(get_user_model(), on_delete = models.CASCADE) # FK به یوزر مدل
 	book = models.ForeignKey(Book , on_delete = models.CASCADE, related_name = 'cmnts_rel') # FK به مدل کتاب BOOK در همینجا(بالا)
-	text = models.TextField(verbose_name = 'Cmnt_Txt')
+	text = models.TextField(verbose_name = 'Comment_Txt')
 	created_at = models.DateTimeField(auto_now = True , verbose_name = 'Created at ')
 	
 	def __str__(self):
