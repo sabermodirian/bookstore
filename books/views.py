@@ -5,6 +5,7 @@ from django.views import  generic # CBV :Class Base View
 
 #import yor models
 from books.models import Book
+from books.forms import CommentForm
 
 
 # Create your views here.
@@ -24,10 +25,23 @@ def book_details_view(request, pk):
     book = get_object_or_404(Book, pk=pk) # get book object
     
     book_comments= book.cmnts_rel.all() # get book's comments برای گرفتن کامنتهای هر کتاب با استفاده از related_name
+    if request.method != 'POST' :
+	    comment_form = CommentForm(request.POST)
+	    if comment_form.is_valid():
+		    new_cmnt = comment_form.save(commit = False)
+		    new_cmnt.book = book
+		    new_cmnt.user = request.user
+		    new_cmnt.save()
+		    comment_form = comment_form()
+	# else:
+	# 	comment_form = comment_form()
+	
+    
     return render(request,
                   'books/book_details.html',
                   {'book': book,
                    'comments' : book_comments ,
+                   'comment_form' : comment_form,
                    })
 
 	
