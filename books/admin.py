@@ -9,5 +9,7 @@ class BookAdmin(admin.ModelAdmin):
 class ModelNameAdmin(admin.ModelAdmin):
 	model = Comment
 	list_display = ('user' , 'book','text','recommend', 'is_active' ,'created_at',)
- 
+	list_filter = ['created_at' , 'book']
+	search_fields = ['text' , 'user__username']
+	ordering = ['-created_at']
 	
