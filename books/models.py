@@ -26,6 +26,8 @@ class Comment(models.Model):
 	book = models.ForeignKey(Book , on_delete = models.CASCADE, related_name = 'cmnts_rel') # FK به مدل کتاب BOOK در همینجا(بالا)
 	text = models.TextField(verbose_name = 'Comment_Txt')
 	created_at = models.DateTimeField(auto_now = True , verbose_name = 'Created at ')
+	is_active = models.BooleanField(default = True) # برای نشان دادن یا عدم نشان دادن کامنت در بخش نظرات مربوط ی این کتاب
+	recommend = models.BooleanField(default = True) # برای توصیه به خرید و مطالعه ی این کتاب یا نه؟
 	
 	def __str__(self):
 		return f'{self.user} writed: this {self.text} for  this: {self.book}'

@@ -61,10 +61,20 @@
         <h2 class="mb-5">نظرات:</h2>
 
         {% for comment in comments %}
+            {% if comment.is_active %}
              <div class="border-bottom mb-3">
-        <h5 class="mb-3">{{ comment.user.username }}</h5>
+                <h5 class="mb-3">{{ comment.user.username }}</h5>
+                 {% if comment.recommend %}
+                 	<p>این کتاب را برای مطالعه مفید میدونم و خریدشو به همه  توصیه میکنم</p>
+                 {% else %}
+                 	<p>پیشنهادی برای  مطالعه ی این کتاب ندارم</p>
+                 {% endif %}
         <p>{{ comment.text|linebreaks }}</p>
     </div>
+
+            {% else %}
+            	<p>نظر شما درباره ی این کتاب برای تایید نمایش  هنوز در دست بررسی است  </p>
+            {% endif %}
         {% empty %}
             <p>هنوز نظری برای این کتاب ثبت نشده است.</p>
         {% endfor %}
