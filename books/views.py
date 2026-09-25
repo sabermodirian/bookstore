@@ -1,4 +1,5 @@
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render , get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import  generic # CBV :Class Base View
@@ -32,6 +33,7 @@ class BooklistView(generic.ListView):
 
 کد استاندارد و خوشگلش این شکلی میشه:
 '''
+@login_required
 def book_details_view(request, pk):
     book = get_object_or_404(Book, pk=pk) # get book object
     
@@ -62,8 +64,7 @@ def book_details_view(request, pk):
                   )
 
 	
-	
-class BookCreateView(generic.CreateView):
+class BookCreateView(LoginRequiredMixin ,generic.CreateView):
 	model = Book
 	fields = ['title' , 'author' , 'description' , 'price', 'bk_cover']
 	template_name =  'books/book_create.html' #'books/book_create_and_update.html'
@@ -72,12 +73,12 @@ class BookCreateView(generic.CreateView):
 	def get_success_url(self) :
 	 	return reverse_lazy('books:book_details' , kwargs = {'pk' : self.object.pk})
 	
-class BookUpdateView(generic.UpdateView):
+class BookUpdateView( LoginRequiredMixin ,generic.UpdateView):
 	model = Book
 	fields = ['title' , 'author' , 'description' , 'bk_cover']
 	template_name =  'books/book_update.html' #'books/book_create_and_update.html'
 	
-class BookDeleteView(generic.DeleteView):
+class BookDeleteView(LoginRequiredMixin ,generic.DeleteView):
 	model = Book
 	template_name = 'books/book_delete.html'
 	success_url = reverse_lazy('books:book_list')
