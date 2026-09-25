@@ -5,99 +5,104 @@
     جزئیات کتاب   {{ book.title }}
 {% endblock %}
 {% block content %}
-    <div class="container mt-5" dir="rtl">
+<div class="container mt-5" dir="rtl">
+    <div class="">
         <div class="">
-            <div class="">
-                <div class="d-flex justify-content-center">
-                    <div class="row w-sm-100 w-100">
-                        <div class="col-xs-12 col-md-3 d-flex justify-content-center">
-                            <div>
-                                {% if book.bk_cover %}
-                                    <img src="{{ book.bk_cover.url }}"
-                                         class="img-fluid rounded-start" class="shadow" alt="...">
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
-                            <h1>{{ book.title }}</h1>
-                            <h5 class="small my-1"><span class="text-muted">نویسنده: </span>{{ book.author }}</h5>
-                            <h5 class="small my-1"><span class="text-muted">معرف کتاب: </span> {{ book.user }}</h5>
-                            <h5 class="small my-1"><span class="text-muted">انتشارات: </span>هوزمزد</h5>
-
-                        </div>
-
-                        <div class="col-xs-12 col-md-3 d-flex flex-column">
-                            <h3 class="align-self-center pt-2 text-muted align-self-md-end">
-                                {{ book.price }} $
-                            </h3>
+            <div class="d-flex justify-content-center">
+                <div class="row w-sm-100 w-100">
+                    <div class="col-xs-12 col-md-3 d-flex justify-content-center">
+                        <div>
+                            {% if book.bk_cover %}
+                                <img src="{{ book.bk_cover.url }}"
+                                     class="img-fluid rounded-start" class="shadow" alt="...">
+                            {% endif %}
                         </div>
                     </div>
-                </div>
+                    <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
+                        <h1>{{ book.title }}</h1>
+                        <h5 class="small my-1"><span class="text-muted">نویسنده: </span>{{ book.author }}</h5>
+                        <h5 class="small my-1"><span class="text-muted">معرف کتاب: </span> {{ book.user }}</h5>
+                        <h5 class="small my-1"><span class="text-muted">انتشارات: </span>هوزمزد</h5>
 
-                <div class="d-flex justify-content-center">
-                    <div class="my-3 p-5 w-sm-75 w-100">
-                        {{ book.description|linebreaks }}
+                    </div>
+
+                    <div class="col-xs-12 col-md-3 d-flex flex-column">
+                        <h3 class="align-self-center pt-2 text-muted align-self-md-end">
+                            {{ book.price }} $
+                        </h3>
                     </div>
                 </div>
+            </div>
 
-                {% if book.user == user %}
-                    <button type="button" class="btn btn-outline-warning"
-                            onclick="window.location.href='{% url 'books:book_update' book.id %}'">
-                        ✏️ ویرایش
+            <div class="d-flex justify-content-center">
+                <div class="my-3 p-5 w-sm-75 w-100">
+                    {{ book.description|linebreaks }}
+                </div>
+            </div>
+
+            {% if book.user == user %}
+                <button type="button" class="btn btn-outline-warning"
+                        onclick="window.location.href='{% url 'books:book_update' book.id %}'">
+                    ✏️ ویرایش
+                </button>
+            {% else %}
+                <h6>شما اجازه ی ویرایش این کتاب را ندارید</h6>
+            {% endif %}
+            {#book.id == pk=book.pk نکته:#}
+            {# فرم امن برای حذف کتاب #}
+            {% if book.user == user %}
+                <form action="{% url 'books:book_delete' pk=book.pk %}" method="post" class="d-inline"
+                      onsubmit="return confirm('صابر مطمئنی می‌خوای این کتاب رو بفرستی دیار باقی؟! 🗑️');">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger">
+                        🗑️ حذف
                     </button>
-                {% endif %}
-                {#book.id == pk=book.pk نکته:#}
-                {# فرم امن برای حذف کتاب #}
-                {% if book.user == user %}
-                    <form action="{% url 'books:book_delete' pk=book.pk %}" method="post" class="d-inline"
-                          onsubmit="return confirm('صابر مطمئنی می‌خوای این کتاب رو بفرستی دیار باقی؟! 🗑️');">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-danger">
-                            🗑️ حذف
-                        </button>
-                    </form>
-                {% endif %}
+                </form>
+            {% else %}
+                <h6>شما اجازه ی حذف این کتاب را ندارید</h6>
+            {% endif %}
+
+        </div>
+
+
+        <div class="d-flex justify-content-center">
+            <div class="card shadow my-3 p-5 w-sm-75 w-100">
+                <h2 class="mb-5">نظرات:</h2>
+
+                {% for comment in comments %}
+                    {% if comment.is_active %}
+                        <div class="border-bottom mb-3">
+                            <h5 class="mb-3">{{ comment.user.username }}</h5>
+                            {% if comment.recommend %}
+                                <p>این کتاب را برای مطالعه مفید میدونم و خریدشو به همه توصیه میکنم</p>
+                            {% else %}
+                                <p>پیشنهادی برای مطالعه ی این کتاب ندارم</p>
+                            {% endif %}
+                            <p>{{ comment.text|linebreaks }}</p>
+                        </div>
+
+                    {% else %}
+                        <p>نظر شما درباره ی این کتاب برای تایید نمایش هنوز در دست بررسی است </p>
+                    {% endif %}
+                {% empty %}
+                    <p>هنوز نظری برای این کتاب ثبت نشده است.</p>
+                {% endfor %}
             </div>
+        </div>
 
 
-            <div class="d-flex justify-content-center">
-                <div class="card shadow my-3 p-5 w-sm-75 w-100">
-                    <h2 class="mb-5">نظرات:</h2>
-
-                    {% for comment in comments %}
-                        {% if comment.is_active %}
-                            <div class="border-bottom mb-3">
-                                <h5 class="mb-3">{{ comment.user.username }}</h5>
-                                {% if comment.recommend %}
-                                    <p>این کتاب را برای مطالعه مفید میدونم و خریدشو به همه توصیه میکنم</p>
-                                {% else %}
-                                    <p>پیشنهادی برای مطالعه ی این کتاب ندارم</p>
-                                {% endif %}
-                                <p>{{ comment.text|linebreaks }}</p>
-                            </div>
-
-                        {% else %}
-                            <p>نظر شما درباره ی این کتاب برای تایید نمایش هنوز در دست بررسی است </p>
-                        {% endif %}
-                    {% empty %}
-                        <p>هنوز نظری برای این کتاب ثبت نشده است.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-
-            <div class="d-flex justify-content-center">
-                <div class="card shadow my-3 p-5 w-sm-75 w-100">
-                    <h3>نظر خود را وارد کنید:</h3>
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ comment_form|crispy }}
-                        <button type="submit" class="btn btn-primary mt3-3">ارسال نظر</button>
-                    </form>
-                </div>
+        <div class="d-flex justify-content-center">
+            <div class="card shadow my-3 p-5 w-sm-75 w-100">
+                <h3>نظر خود را وارد کنید:</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <button type="submit" class="btn btn-primary mt3-3">ارسال نظر</button>
+                </form>
             </div>
         </div>
     </div>
-    </div>
+</div>
+</div>
 
 {% endblock %}
