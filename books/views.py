@@ -95,9 +95,26 @@ class BookUpdateView( LoginRequiredMixin, UserPassesTestMixin ,generic.UpdateVie
 		
 		return book_obj.user == self.request.user # اگر یوزر معرف(سازنده) شیئ کتاب همان یوزر ورودی (احراز هویت شده authenticated user) به سایت میباشد مقدار True برگردون
 	
-class BookDeleteView(LoginRequiredMixin ,generic.DeleteView):
+class BookDeleteView(LoginRequiredMixin, UserPassesTestMixin ,generic.DeleteView):
 	model = Book
 	template_name = 'books/book_delete.html'
-	success_url = reverse_lazy('books:book_list')
+	success_url = reverse_lazy('book_list')  # بعد از خاکسپاری کتاب، کاربر هدایت بشه به لیست بقیه کتاب‌ها! 🕊️
+	
+	def test_func(self) :
+		"""
+		Check authorization for object deletion / بررسی مجوز حذف شیء.
+		این متد حکم ضامن تفنگ رو داره! 🔫 قبل از اینکه کتاب بره قاطی باقالیا،
+		چک می‌کنه ببیند آیا این بنده‌خدایی که دستش روی ماشه است (کاربر جاری)،
+		واقعاً همون صاحب و خالق این اثرِ فاخر بوده یا نه.
+
+		- اگر طرف صاحب اثر باشه: مجوز قتل صادر میشه (True) و کتاب با آرامش ابدی روبرو خواهد شد. ⚰️
+		- اگر یوزر غریبه و فضول باشه: یه خطای شیک 403 (Forbidden) تو صورتش کوبیده میشه (False)! 🛑
+
+		Returns:
+			bool: True if the current user is the owner of the book, False otherwise.
+		"""
+		book_obj = self.get_object()  # احضار روحِ کتابی که قراره فرستاده بشه به دیار باقی!
+		return book_obj.user == self.request.user  # آیا جلاد، خودِ صاحب‌کار است؟!
+	
 	
 

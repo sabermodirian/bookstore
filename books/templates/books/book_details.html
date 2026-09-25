@@ -48,13 +48,15 @@
                 {% endif %}
                 {#book.id == pk=book.pk نکته:#}
                 {# فرم امن برای حذف کتاب #}
-                <form action="{% url 'books:book_delete' pk=book.pk %}" method="post" class="d-inline"
-                      onsubmit="return confirm('صابر مطمئنی می‌خوای این کتاب رو بفرستی دیار باقی؟! 🗑️');">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger">
-                        🗑️ حذف
-                    </button>
-                </form>
+                {% if book.user == user %}
+                    <form action="{% url 'books:book_delete' pk=book.pk %}" method="post" class="d-inline"
+                          onsubmit="return confirm('صابر مطمئنی می‌خوای این کتاب رو بفرستی دیار باقی؟! 🗑️');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">
+                            🗑️ حذف
+                        </button>
+                    </form>
+                {% endif %}
             </div>
 
 
