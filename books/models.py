@@ -12,7 +12,7 @@ class Book(models.Model):
 	#decimal_places : تعداداعشار , max_digits : تعدادکل ارقام
 	
 	bk_cover = models.ImageField(upload_to = 'covers/', blank = True , verbose_name = 'Book Cover') #تصاویر جلد کتابها را در این مسیر ذخیره کن
-	
+	user = models.ForeignKey(get_user_model() , on_delete = models.CASCADE)
 	
 	def __str__(self):
 		return f'{self.title} : اثری ماندگار از نویسنده :  {self.author} '
