@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from django.shortcuts import render , get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import  generic # CBV :Class Base View
@@ -73,10 +73,27 @@ class BookCreateView(LoginRequiredMixin ,generic.CreateView):
 	def get_success_url(self) :
 	 	return reverse_lazy('books:book_details' , kwargs = {'pk' : self.object.pk})
 	
-class BookUpdateView( LoginRequiredMixin ,generic.UpdateView):
+class BookUpdateView( LoginRequiredMixin, UserPassesTestMixin ,generic.UpdateView):
 	model = Book
 	fields = ['title' , 'author' , 'description' , 'bk_cover']
 	template_name =  'books/book_update.html' #'books/book_create_and_update.html'
+	
+	def test_func(self) :
+		"""
+		این متد، نقشِ دربونِ سخت‌گیرِ سایت رو بازی می‌کنه! 👮‍♂️
+
+		بررسی می‌کنه که آیا کاربری که درخواست ویرایش داره، همون خالقِ اصلیِ این
+		کتاب هست یا نه. اگر یوزرِ لاگین شده صاحبِ اثر باشه، اجازه‌ی ورود به
+		ویرایش رو صادر می‌کنه (True)، وگرنه با یه '403 Forbidden' محترمانه
+		بیرونش می‌کنه. 🚪🚫
+
+		Returns:
+			bool: True اگر کاربر صاحب کتاب باشد، در غیر این صورت False.
+		"""
+		book_obj = self.get_object()  #  گرفتن و داشتن آبجکت کتابی را که در این کلاس آپدیت درحال ویرایش آن هستیم
+		# گرفتن آبجکت کتابی که قراره زیر تیغِ ویرایش بره!
+		
+		return book_obj.user == self.request.user # اگر یوزر معرف(سازنده) شیئ کتاب همان یوزر ورودی (احراز هویت شده authenticated user) به سایت میباشد مقدار True برگردون
 	
 class BookDeleteView(LoginRequiredMixin ,generic.DeleteView):
 	model = Book
